@@ -246,6 +246,7 @@ npm run lint         # Run ESLint
 - The AI assistant has full permission to make changes, add features, and implement functionality without asking for permission
 - All development tasks including software development, infrastructure design, reading files, making changes, and applying code fixes are within scope
 - Changes will be made directly to implement the core functionality as needed
+- **Always save changes after each update** - this ensures all modifications are preserved
 - Follow "grandma test" principles for extreme simplicity in UI/UX
 - Use TypeScript for type safety
 - Follow RESTful API conventions

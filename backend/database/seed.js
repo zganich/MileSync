@@ -1,20 +1,25 @@
-const { User, Trip, MileageGap } = require('../backend/models');
-const logger = require('../backend/config/logger');
+const { User, Trip, MileageGap } = require('../models');
+const logger = require('../config/logger');
 
 async function seed() {
   try {
     logger.info('Starting database seeding...');
     
-    // Create sample user
-    const user = await User.create({
-      email: 'demo@milesync.com',
-      password: 'demo123',
-      firstName: 'Demo',
-      lastName: 'User',
-      phone: '5550123456'
-    });
+    // Find or create sample user
+    let user = await User.findOne({ where: { email: 'demo@milesync.com' } });
     
-    logger.info(`Created demo user: ${user.email}`);
+    if (!user) {
+      user = await User.create({
+        email: 'demo@milesync.com',
+        password: 'demo123',
+        firstName: 'Demo',
+        lastName: 'User',
+        phone: '5550123456'
+      });
+      logger.info(`Created demo user: ${user.email}`);
+    } else {
+      logger.info(`Demo user already exists: ${user.email}`);
+    }
     
     // Create sample trips
     const sampleTrips = [

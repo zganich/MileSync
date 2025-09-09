@@ -1,6 +1,6 @@
-const { sequelize } = require('../backend/config/database');
-const logger = require('../backend/config/logger');
-const { User, Trip, MileageGap } = require('../backend/models');
+const { sequelize } = require('../config/database');
+const logger = require('../config/logger');
+const { User, Trip, MileageGap } = require('../models');
 
 async function migrate() {
   try {

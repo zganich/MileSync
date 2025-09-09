@@ -1,4 +1,5 @@
 const { Trip, MileageGap } = require('../models');
+const { Op } = require('sequelize');
 const moment = require('moment');
 const logger = require('../config/logger');
 

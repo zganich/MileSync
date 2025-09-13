@@ -1,21 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { db } from '@/lib/db'
 
 export async function GET(request: NextRequest) {
   try {
-    // Test database connection
-    const result = await db.execute('SELECT 1 as test')
-    
+    // Simple test without database to avoid infinite loops
     return NextResponse.json({
       status: 'success',
-      message: 'Database connection working',
-      test: result
+      message: 'API endpoint working',
+      timestamp: new Date().toISOString()
     })
   } catch (error) {
-    console.error('Database test error:', error)
+    console.error('Test endpoint error:', error)
     return NextResponse.json({
       status: 'error',
-      message: 'Database connection failed',
+      message: 'Test endpoint failed',
       error: error.message
     }, { status: 500 })
   }

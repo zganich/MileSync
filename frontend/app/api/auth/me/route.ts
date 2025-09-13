@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
       }
 
       const userData = { ...user[0] }
-      delete userData.password
+      delete (userData as any).password
 
       return NextResponse.json({
         data: {

@@ -1,19 +1,15 @@
 {
-  "name": "milesync-monorepo",
+  "name": "milesync",
   "version": "1.0.0",
   "description": "A gig driver mileage reconciliation platform",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
-    "dev:backend": "cd backend && npm run dev",
-    "dev:frontend": "cd frontend && npm run dev",
-    "build": "npm run build:backend && npm run build:frontend",
-    "build:backend": "cd backend && npm install",
-    "build:frontend": "cd frontend && npm run build",
-    "start": "cd backend && npm start",
-    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
-    "migrate": "cd backend && npm run migrate",
-    "seed": "cd backend && npm run seed"
+    "dev": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "start": "cd frontend && npm start",
+    "install:all": "cd frontend && npm install",
+    "db:migrate": "cd frontend && npm run db:migrate",
+    "db:seed": "cd frontend && npm run db:seed"
   },
   "keywords": [
     "mileage",
@@ -33,7 +29,5 @@
     "node": ">=18.0.0",
     "npm": ">=8.0.0"
   },
-  "devDependencies": {
-    "concurrently": "^8.2.2"
-  }
+  "devDependencies": {}
 }

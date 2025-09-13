@@ -14,35 +14,39 @@ A gig driver mileage reconciliation platform that simplifies mileage tracking an
 ## Technology Stack
 
 - **Frontend**: Next.js 14, TypeScript, Tailwind CSS
-- **Backend**: Node.js, Express.js, Sequelize ORM
-- **Database**: PostgreSQL
+- **Backend**: Vercel API Routes (Serverless Functions)
+- **Database**: Supabase (PostgreSQL)
 - **Authentication**: JWT tokens
 - **PDF Processing**: pdf-parse, tesseract.js
-- **Deployment**: Vercel (Frontend), Railway/Heroku (Backend)
+- **Deployment**: Vercel (Full-Stack)
 
 ## Project Structure
 
 ```
 MileSync/
-├── frontend/              # Next.js frontend application
-│   ├── src/               # Source code
-│   ├── public/            # Static assets
-│   ├── package.json       # Frontend dependencies
-│   └── next.config.js     # Next.js configuration
-├── backend/               # Node.js backend API
-│   ├── config/            # Database and logger configuration
-│   ├── middleware/        # Express middleware
-│   ├── models/            # Sequelize data models
-│   ├── routes/            # API route definitions
-│   ├── services/          # Business logic
-│   ├── database/          # Database migrations and seeds
-│   ├── uploads/           # File upload directory
-│   ├── logs/              # Application logs
-│   ├── server.js          # Main server file
-│   └── package.json       # Backend dependencies
-├── docs/                  # Documentation
-├── tests/                 # Test files
-└── README.md              # This file
+├── app/                   # Next.js 14 App Router
+│   ├── api/               # Vercel API Routes (Serverless Functions)
+│   │   ├── auth/          # Authentication endpoints
+│   │   ├── mileage/       # Trip and gap management
+│   │   └── upload/        # PDF processing endpoints
+│   ├── components/        # React components
+│   │   ├── auth/          # Login/Register forms
+│   │   └── dashboard/     # Dashboard components
+│   ├── globals.css        # Global styles
+│   ├── layout.tsx         # Root layout
+│   ├── page.tsx           # Home page
+│   └── providers.tsx      # Context providers
+├── lib/                   # Utility libraries
+│   ├── db.ts              # Database connection (Drizzle + Supabase)
+│   ├── schema.ts          # Database schema definitions
+│   ├── migrate.ts         # Database migrations
+│   └── demo-data.ts       # Demo data seeding
+├── hooks/                 # Custom React hooks
+├── services/              # API service functions
+├── types/                 # TypeScript type definitions
+├── package.json           # Dependencies
+├── vercel.json           # Vercel deployment config
+└── README.md             # This file
 ```
 
 ## Quick Start
@@ -50,7 +54,8 @@ MileSync/
 ### Prerequisites
 
 - Node.js 18+ and npm 8+
-- PostgreSQL database
+- Supabase account (free)
+- Vercel account (free)
 - Git
 
 ### Installation
@@ -58,35 +63,21 @@ MileSync/
 1. **Clone the repository**
    ```bash
    git clone https://github.com/jamesknight/MileSync.git
-   cd MileSync
+   cd MileSync/frontend
    ```
 
 2. **Install dependencies**
    ```bash
-   # Install backend dependencies
-   cd backend
-   npm install
-   
-   # Install frontend dependencies
-   cd ../frontend
+   cd frontend
    npm install
    ```
 
 3. **Set up environment variables**
    
-   **Backend (.env in backend/ folder):**
+   **Environment Variables (.env.local in frontend/ folder):**
    ```env
-   # Database Configuration
-   DATABASE_URL=postgresql://username:password@localhost:5432/milesync
-   DB_HOST=localhost
-   DB_PORT=5432
-   DB_NAME=milesync
-   DB_USER=your_username
-   DB_PASSWORD=your_password
-   
-   # API Configuration
-   API_PORT=3001
-   API_URL=http://localhost:3001
+   # Database Configuration (Supabase)
+   DATABASE_URL=postgresql://postgres:[password]@db.[project].supabase.co:5432/postgres
    
    # Authentication
    JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
@@ -94,71 +85,47 @@ MileSync/
    
    # File Upload
    MAX_FILE_SIZE=10485760
-   UPLOAD_DIR=./uploads
    
-   # Logging
-   LOG_LEVEL=info
-   NODE_ENV=development
-   ```
-   
-   **Frontend (.env.local in frontend/ folder):**
-   ```env
-   NEXT_PUBLIC_API_URL=http://localhost:3001
+   # App URLs
    NEXT_PUBLIC_APP_URL=http://localhost:3000
    ```
 
-4. **Set up the database**
+4. **Set up Supabase database**
    ```bash
-   cd backend
-   # Create PostgreSQL database
-   createdb milesync
-   
-   # Run migrations
-   npm run migrate
-   
-   # Seed with sample data (optional)
-   npm run seed
+   # 1. Create a new project at https://supabase.com
+   # 2. Go to Settings > Database > Connection string
+   # 3. Copy the connection string and add to .env.local
+   # 4. Run migrations and seed data
+   npm run db:migrate
+   npm run db:seed
    ```
 
-5. **Start the development servers**
+5. **Start the development server**
    ```bash
-   # Terminal 1 - Backend
-   cd backend
-   npm run dev
-   
-   # Terminal 2 - Frontend
-   cd frontend
    npm run dev
    ```
 
 6. **Access the application**
-   - Frontend: http://localhost:3000
-   - Backend API: http://localhost:3001
+   - Application: http://localhost:3000
+   - API: http://localhost:3000/api
    - Demo account: demo@milesync.com / demo123
 
 ## Development
 
 ### Available Scripts
 
-**Backend (in backend/ directory):**
-```bash
-npm run dev          # Start development server
-npm run migrate      # Run database migrations
-npm run seed         # Seed database with sample data
-npm start            # Start production server
-```
-
-**Frontend (in frontend/ directory):**
 ```bash
 npm run dev          # Start development server
 npm run build        # Build for production
 npm run start        # Start production server
 npm run lint         # Run ESLint
+npm run db:migrate   # Run database migrations
+npm run db:seed      # Seed database with demo data
 ```
 
 ## Deployment
 
-### Frontend (Vercel)
+### Deploy to Vercel (Full-Stack)
 
 1. **Connect to Vercel**
    ```bash
@@ -169,32 +136,18 @@ npm run lint         # Run ESLint
    ```
 
 2. **Set environment variables** in Vercel dashboard:
-   - `NEXT_PUBLIC_API_URL` - Your backend API URL
-   - `NEXT_PUBLIC_APP_URL` - Your frontend URL
+   - `DATABASE_URL` - Your Supabase connection string
+   - `JWT_SECRET` - Your JWT secret key
+   - `JWT_EXPIRES_IN` - Token expiration (default: 7d)
 
 3. **Deploy**
    ```bash
    vercel --prod
    ```
 
-### Backend (Railway/Heroku)
-
-1. **Railway Deployment**
-   ```bash
-   cd backend
-   # Connect to Railway
-   npm install -g @railway/cli
-   railway login
-   railway init
-   railway up
-   ```
-
-2. **Set environment variables** in Railway dashboard
-
-3. **Database Setup**
-   - Use Railway PostgreSQL addon
-   - Update `DATABASE_URL` in environment variables
-   - Run migrations: `railway run npm run migrate`
+4. **Set up database** (first deployment only):
+   - Run migrations: `vercel env pull .env.local` then `npm run db:migrate`
+   - Seed demo data: `npm run db:seed`
 
 ## API Endpoints
 

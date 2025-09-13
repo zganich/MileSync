@@ -35,10 +35,10 @@ export async function GET(request: NextRequest) {
       }).from(trips).where(eq(trips.userId, decoded.userId))
       
       const summary = {
-        totalBusinessMiles: businessMilesResult[0]?.total || 0,
-        totalPersonalMiles: personalMilesResult[0]?.total || 0,
-        totalTrips: tripsCountResult[0]?.count || 0,
-        totalMiles: (businessMilesResult[0]?.total || 0) + (personalMilesResult[0]?.total || 0)
+        totalBusinessMiles: Number(businessMilesResult[0]?.total) || 0,
+        totalPersonalMiles: Number(personalMilesResult[0]?.total) || 0,
+        totalTrips: Number(tripsCountResult[0]?.count) || 0,
+        totalMiles: (Number(businessMilesResult[0]?.total) || 0) + (Number(personalMilesResult[0]?.total) || 0)
       }
       
       return NextResponse.json({

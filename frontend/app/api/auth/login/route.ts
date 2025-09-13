@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
       .where(eq(users.id, user[0].id))
 
     const userData = { ...user[0] }
-    delete userData.password
+    delete (userData as any).password
 
     return NextResponse.json({
       data: {

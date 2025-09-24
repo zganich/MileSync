@@ -1,0 +1,28 @@
+MileSync AI Assistant Quick Reference
+
+COMMAND TO USE: AI_INIT
+
+PROJECT: Single Next.js app in mile-sync-app/ directory
+STATUS: Mostly set up, needs Supabase credentials in .env.local
+DATABASE: Supabase PostgreSQL
+DEPLOYMENT: Vercel
+
+KEY FILES:
+- mile-sync-app/.env.local (EXISTS - needs credentials)
+- mile-sync-app/package.json (CONFIGURED)
+- README.md (COMPLETE)
+
+WORKFLOW:
+1. AI reads .ai-knowledge-base.md first
+2. Checks existing files
+3. Builds on existing work
+4. Only suggests what's missing
+
+COMMANDS:
+AI_INIT - Full project check
+STATUS - Quick status
+DEV_MODE - Development mode
+
+DEMO: demo@milesync.com / demo123
+
+CRITICAL: AI must read existing files before suggesting changes!

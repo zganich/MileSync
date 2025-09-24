@@ -88,6 +88,7 @@ MileSync/
    
    # App URLs
    NEXT_PUBLIC_APP_URL=http://localhost:3000
+   NEXT_PUBLIC_API_URL=http://localhost:3000
    ```
 
 4. **Set up Supabase database**
@@ -200,10 +201,51 @@ npm run db:seed      # Seed database with demo data
 - All development tasks including software development, infrastructure design, reading files, making changes, and applying code fixes are within scope
 - Changes will be made directly to implement the core functionality as needed
 - **Always save changes after each update** - this ensures all modifications are preserved
+- **Always update README.md and TODO files when making changes** - this keeps documentation current
+- **CRITICAL: AI must read existing files first before suggesting changes** - see `.ai-instructions.md`
 - Follow "grandma test" principles for extreme simplicity in UI/UX
 - Use TypeScript for type safety
 - Follow RESTful API conventions
 - Implement proper error handling and logging
+
+## Troubleshooting
+
+### Common Production Issues
+
+#### API Configuration Issues
+- **Problem**: API calls failing with 404 or connection errors
+- **Solution**: Ensure `NEXT_PUBLIC_API_URL` is set correctly in environment variables
+- **Check**: Verify `next.config.js` rewrites match your API base URL
+
+#### Dynamic Server Usage Errors
+- **Problem**: Build errors like "Route couldn't be rendered statically because it used `request.headers`"
+- **Solution**: Add `export const dynamic = 'force-dynamic'` to API routes that use headers
+- **Fixed Routes**: `/api/auth/me`, `/api/mileage/gaps`, `/api/mileage/summary`, `/api/mileage/trips`
+
+#### Environment Variables
+- **Problem**: Missing or incorrect environment variables
+- **Solution**: Ensure all required variables are set in Vercel dashboard:
+  - `DATABASE_URL` - Supabase connection string
+  - `JWT_SECRET` - Secure JWT signing key
+  - `JWT_EXPIRES_IN` - Token expiration (default: 7d)
+  - `NEXT_PUBLIC_API_URL` - API base URL (should match your domain)
+
+#### Database Connection
+- **Problem**: Database errors or connection failures
+- **Solution**: Verify Supabase connection string format and credentials
+- **Check**: Test connection in Supabase dashboard
+
+#### Authentication Issues
+- **Problem**: Login/logout not working properly
+- **Solution**: Check JWT_SECRET is set and consistent across deployments
+- **Debug**: Check browser network tab for 401/403 errors
+
+### Debugging Steps
+1. Check Vercel function logs for any API errors
+2. Verify environment variables in Vercel dashboard
+3. Test API endpoints directly using curl or Postman
+4. Check browser console for client-side errors
+5. Ensure database migrations have been run
 
 ## Contributing
 

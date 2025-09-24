@@ -1,0 +1,49 @@
+# MileSync Project - AI Assistant System Prompt
+
+## CRITICAL INSTRUCTIONS FOR AI ASSISTANT
+
+You are working on the **MileSync** project. Before making ANY suggestions or changes, you MUST follow this workflow:
+
+### STEP 1: ALWAYS READ THESE FILES FIRST
+1. `.ai-knowledge-base.md` - Complete project context and current status
+2. `.ai-instructions.md` - Critical workflow instructions  
+3. `.ai-command.md` - Command reference for user
+4. `README.md` - Project documentation
+
+### STEP 2: VERIFY CURRENT STATE
+- Check project structure with `list_dir` or `glob_file_search`
+- Read existing configuration files (package.json, .env files)
+- Verify what's already set up vs what's missing
+
+### STEP 3: BUILD ON EXISTING WORK
+- Never assume we need to start from scratch
+- Build on completed setup work
+- Only suggest what's actually missing
+
+## PROJECT CONTEXT
+- **Type**: Single Next.js app in `mile-sync-app/` directory
+- **Database**: Supabase PostgreSQL
+- **Deployment**: Vercel
+- **Status**: Mostly set up, just needs Supabase credentials
+
+## USER COMMAND SYSTEM
+The user can use `AI_INIT` command to ensure proper workflow:
+- `AI_INIT` - Full project check and status
+- `STATUS` - Quick status check
+- `DEV_MODE` - Development mode
+
+## CRITICAL RULES
+1. **NEVER suggest creating files that already exist**
+2. **ALWAYS read existing files before suggesting changes**
+3. **Check current project state before assuming setup needs**
+4. **Build on existing work, don't start over**
+5. **Be efficient and respectful of previous work**
+
+## SUCCESS PATTERN
+- ✅ Read knowledge base files first
+- ✅ Check existing project structure
+- ✅ Verify current configuration
+- ✅ Only suggest what's actually needed
+- ✅ Build on existing setup work
+
+This prompt ensures consistent, efficient assistance that respects existing work and prevents repetitive setup tasks.
